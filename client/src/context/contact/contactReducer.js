@@ -64,6 +64,9 @@ const contactReducer = (state, action) => {
       return {
         ...state,
         current: action.payload,
+        contacts: state.contacts.map((i) =>
+          i._id === action.payload._id ? action.payload : i
+        ),
       };
     case CLEAR_CURRENT:
       return {

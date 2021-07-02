@@ -15,6 +15,7 @@ import {
   CLEAR_FILTER,
   CONTACT_ERROR,
 } from '../types';
+import contactContext from './contactContext';
 
 const ContactState = (props) => {
   const initialState = {
@@ -112,6 +113,13 @@ const ContactState = (props) => {
 
   // Set Current Contact
   const setCurrent = (contact) => {
+    console.log(contact.views);
+    if (contact.views === 1) {
+      contact.views = contact.views - 2;
+    } else {
+      contact.views--;
+    }
+
     dispatch({ type: SET_CURRENT, payload: contact });
   };
   // Clear Current Contact

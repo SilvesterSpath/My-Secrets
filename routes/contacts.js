@@ -75,7 +75,7 @@ router.put('/:id', auth, async (req, res) => {
   if (secret) contactFields.secret = secret;
   if (views) contactFields.views = views;
   if (expire) contactFields.expire = expire;
-  if (hash) contactFields.expire = hash;
+  if (hash) contactFields.hash = hash;
 
   try {
     let contact = await Contact.findById(req.params.id);

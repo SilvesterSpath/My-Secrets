@@ -16,13 +16,15 @@ const ContactForm = () => {
 
   useEffect(() => {
     if (current !== null) {
+      console.log(current.views);
+
       setContact(current);
     } else {
       setContact({
         secret: '',
-        hash: '',
         views: '',
         expire: '',
+        hash: '',
       });
     }
   }, [contactContext, current]);
@@ -55,7 +57,7 @@ const ContactForm = () => {
     <div>
       <form onSubmit={onSubmit}>
         <h2 className='text-primary'>
-          {current ? 'Edit Secret' : 'Add Secret'}
+          {current ? 'View/Edit Secret' : 'Add Secret'}
         </h2>
         <input
           type='text'
@@ -82,7 +84,7 @@ const ContactForm = () => {
         <div>
           <input
             type='submit'
-            value={current ? 'Update Secret' : 'Add Secret'}
+            value={current ? 'Update/Confirm Secret' : 'Add Secret'}
             className='btn btn-primary btn-block'
           />
           {current && (

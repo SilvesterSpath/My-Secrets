@@ -6,7 +6,7 @@ const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext);
   const { deleteContact, setCurrent, clearCurrent } = contactContext;
 
-  const { _id, secret, views, expire, hash } = contact;
+  const { _id, views, expire, hash } = contact;
 
   const onDelete = () => {
     deleteContact(_id);
@@ -15,12 +15,21 @@ const ContactItem = ({ contact }) => {
 
   return (
     <div className='card bg-light'>
-      <h3 className='text-primary text-left'>{secret} </h3>
+      {views < 1 ? (
+        <h3 className='text-primary text-left'>There was a secret... </h3>
+      ) : (
+        <h3 className='text-primary text-left'>There is a secret... </h3>
+      )}
+
       <ul className='list'>
-        {views && (
+        {views < 1 ? (
+          <li>
+            <i className='fas fa-eye'></i> 0 view left
+          </li>
+        ) : (
           <li>
             <i className='fas fa-eye'></i>
-            {' ' + views} views(s) left
+            {' ' + views} view(s) left
           </li>
         )}
         {expire && (
@@ -32,12 +41,23 @@ const ContactItem = ({ contact }) => {
         {hash && <li>hash: {' ' + hash.slice(0, 10)}</li>}
       </ul>
       <p>
-        <button
-          className='btn btn-dark btn-sm'
-          onClick={() => setCurrent(contact)}
-        >
-          Edit
-        </button>
+        {views < 1 ? (
+          <button
+            className='btn btn-dark btn-sm'
+            disabled
+            onClick={() => setCurrent(contact)}
+          >
+            View Secret
+          </button>
+        ) : (
+          <button
+            className='btn btn-dark btn-sm'
+            onClick={() => setCurrent(contact)}
+          >
+            View Secret
+          </button>
+        )}
+
         <button className='btn btn-danger btn-sm' onClick={onDelete}>
           Delete
         </button>
