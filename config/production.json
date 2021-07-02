@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://swx76:760528@contactkeeper.alit5.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-efegro-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true",
+  "jwtSecret": "secret"
+}
