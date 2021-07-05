@@ -49,11 +49,7 @@ const ContactItem = ({ contact }) => {
       </ul>
       <p>
         {views < 1 || diff <= 0 ? (
-          <button
-            className='btn btn-dark btn-sm'
-            disabled
-            onClick={() => setCurrent(contact)}
-          >
+          <button className='btn btn-dark btn-sm' disabled>
             Can't View Secret!
           </button>
         ) : (

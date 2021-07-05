@@ -96,13 +96,6 @@ const ContactForm = () => {
             value={current ? 'Update/Confirm Secret' : 'Add Secret'}
             className='btn btn-primary btn-block'
           />
-          {current && (
-            <div>
-              <button className='btn btn-light btn-block' onClick={clearData}>
-                Clear
-              </button>
-            </div>
-          )}
         </div>
       </form>
     </div>
