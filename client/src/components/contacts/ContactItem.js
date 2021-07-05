@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import ContactContext from '../../context/contact/contactContext';
 
@@ -68,15 +68,6 @@ const ContactItem = ({ contact }) => {
         <button className='btn btn-danger btn-sm' onClick={onDelete}>
           Delete
         </button>
-        {/*       <button
-          className='btn btn-light btn-sm'
-          onClick={() => {
-            setCurrent(current);
-            updateContact(current);
-          }}
-        >
-          <a href={`./${hash}`}>View</a>
-        </button> */}
       </p>
     </div>
   );
