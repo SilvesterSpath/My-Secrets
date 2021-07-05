@@ -68,6 +68,7 @@ const contactReducer = (state, action) => {
           i._id === action.payload._id ? action.payload : i
         ),
       };
+
     case CLEAR_CURRENT:
       return {
         ...state,
