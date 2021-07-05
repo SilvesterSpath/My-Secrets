@@ -4,8 +4,8 @@ const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const Secret = require('../models/Secret');
 
-// @route   GET api/contacts
-// @desc    Get user all contacts
+// @route   GET api/secrets
+// @desc    Get user all secrets
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
@@ -19,8 +19,8 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route   GET api/contacts/:id
-// @desc    Get a contact
+// @route   GET api/secrets/:id
+// @desc    Get a secret
 // @access  Private
 router.get('/:id', auth, async (req, res) => {
   try {
@@ -32,8 +32,8 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
-// @route   POST api/contacts
-// @desc    Add new contact
+// @route   POST api/secrets
+// @desc    Add new secret
 // @access  Private
 router.post(
   '/',
@@ -54,7 +54,7 @@ router.post(
         user: req.user.id,
       });
 
-      const secret = await newSecret.save(); // this will save the contact instance to the database
+      const secret = await newSecret.save(); // this will save the secret instance to the database
 
       res.json(secret);
     } catch (error) {
@@ -64,13 +64,13 @@ router.post(
   }
 );
 
-// @route   PUT api/contacts/:id
-// @desc    Update a contact
+// @route   PUT api/secrets/:id
+// @desc    Update a secret
 // @access  Private
 router.put('/:id', auth, async (req, res) => {
   const { secretText, views, expire, hash } = req.body;
 
-  // Build a contact object
+  // Build a secret object
   const secretFields = {};
   if (secretText) secretFields.secretText = secretText;
   if (views) secretFields.views = views;
@@ -82,7 +82,7 @@ router.put('/:id', auth, async (req, res) => {
     if (!secret) {
       return res.status(404).json({ message: 'Secret not found' });
     }
-    // Make sure user owns contact
+    // Make sure user owns secret
     if (secret.user.toString() !== req.user.id) {
       return res.status(401).json({ message: 'Not authorized!' });
     }
@@ -101,8 +101,8 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
-// @route   PUT api/contacts/:id
-// @desc    Delete a contact
+// @route   PUT api/secrets/:id
+// @desc    Delete a secret
 // @access  Private
 router.delete('/:id', auth, async (req, res) => {
   try {
@@ -110,7 +110,7 @@ router.delete('/:id', auth, async (req, res) => {
     if (!secret) {
       return res.status(404).json({ message: 'Secret not found' });
     }
-    // Make sure user owns contact
+    // Make sure user owns secret
     if (secret.user.toString() !== req.user.id) {
       return res.status(401).json({ message: 'Not authorized!' });
     }

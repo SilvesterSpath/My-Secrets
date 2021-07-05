@@ -16,7 +16,7 @@ app.use(express.json({ extended: false }));
 app.use(morgan('dev'));
 
 /* app.get('/', (req, res) => {
-  res.json({ msg: 'Welcome to the ContactKeeper API...' });
+  res.json({ msg: 'Welcome to the SecretKeeper API...' });
 }); */
 
 // Define Routes

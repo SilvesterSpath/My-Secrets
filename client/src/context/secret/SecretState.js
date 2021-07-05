@@ -26,7 +26,7 @@ const SecretState = (props) => {
 
   const [state, dispatch] = useReducer(SecretReducer, initialState);
 
-  // Get Contacts
+  // Get secrets
   const getSecrets = async () => {
     try {
       const res = await axios.get('/api/secrets');
@@ -42,7 +42,7 @@ const SecretState = (props) => {
     }
   };
 
-  // Add Contact
+  // Add secret
   const addSecret = async (secret) => {
     const config = {
       headers: {
@@ -63,7 +63,7 @@ const SecretState = (props) => {
     }
   };
 
-  // Delete Contact
+  // Delete secret
   const deleteSecret = async (id) => {
     try {
       await axios.delete(`/api/secrets/${id}`);
@@ -80,7 +80,7 @@ const SecretState = (props) => {
     }
   };
 
-  // Update Contact
+  // Update secret
   const updateSecret = async (secret) => {
     const config = {
       headers: {
@@ -101,12 +101,12 @@ const SecretState = (props) => {
     }
   };
 
-  // Clear Contacts
+  // Clear secrets
   const clearSecrets = () => {
     dispatch({ type: CLEAR_SECRETS });
   };
 
-  // Set Current Contact
+  // Set Current secret
   const setCurrent = (secret) => {
     console.log(secret.views);
     if (secret.views === 1) {
@@ -118,13 +118,13 @@ const SecretState = (props) => {
     dispatch({ type: SET_CURRENT, payload: secret });
   };
 
-  // Clear Current Contact
+  // Clear Current secret
   const clearCurrent = () => {
     dispatch({ type: CLEAR_CURRENT });
   };
 
-  // Filter Contacts
-  const filterContacts = (text) => {
+  // Filter secrets
+  const filterSecrets = (text) => {
     dispatch({ type: FILTER_SECRETS, payload: text });
   };
 
@@ -147,7 +147,7 @@ const SecretState = (props) => {
         setCurrent,
         clearCurrent,
         updateSecret,
-        filterContacts,
+        filterSecrets,
         clearFilter,
       }}
     >
