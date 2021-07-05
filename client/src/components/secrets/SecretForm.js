@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import SecretContext from '../../context/secret/secretContext';
 
-import bcrypt from 'bcryptjs';
+/* import bcrypt from 'bcryptjs'; */
 
 const SecretForm = () => {
   const secretContext = useContext(SecretContext);
@@ -45,9 +45,9 @@ const SecretForm = () => {
     if (current) {
       updateSecret(secret);
     } else {
-      const salt = await bcrypt.genSalt(5);
-      const hashed = await bcrypt.hash(secretText, salt);
-      secret.hash = hashed;
+      /* const salt = await bcrypt.genSalt(5);
+      const hashed = await bcrypt.hash(secretText, salt); */
+      secret.hash = 'hashed';
       console.log(secret);
       addSecret(secret);
     }
