@@ -2,6 +2,9 @@
   "name": "contact_keeper",
   "version": "1.0.0",
   "description": "Secret managar app",
+  "engines": {
+    "node": "14.15.3"
+  },
   "main": "server.js",
   "homepage": "./",
   "scripts": {
@@ -11,7 +14,7 @@
     "build": "npm run build --prefix client",
     "clientinstall": "npm install --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install bcryptjs npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
