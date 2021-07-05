@@ -1,125 +1,121 @@
 import React, { useReducer } from 'react';
 /* import { v4 as uuid } from 'uuid'; */
-import ContactContext from './contactContext';
-import ContactReducer from './contactReducer';
+import SecretContext from './secretContext';
+import SecretReducer from './secretReducer';
 import axios from 'axios';
 import {
-  GET_CONTACTS,
-  CLEAR_CONTACTS,
-  ADD_CONTACT,
-  DELETE_CONTACT,
+  GET_SECRETS,
+  CLEAR_SECRETS,
+  ADD_SECRET,
+  DELETE_SECRET,
   SET_CURRENT,
   CLEAR_CURRENT,
-  UPDATE_CONTACT,
-  FILTER_CONTACTS,
+  UPDATE_SECRET,
+  FILTER_SECRETS,
   CLEAR_FILTER,
-  CONTACT_ERROR,
+  SECRET_ERROR,
 } from '../types';
 
-const ContactState = (props) => {
+const SecretState = (props) => {
   const initialState = {
-    contacts: null,
+    secrets: null,
     current: null,
     filtered: null,
     error: null,
   };
 
-  const [state, dispatch] = useReducer(ContactReducer, initialState);
+  const [state, dispatch] = useReducer(SecretReducer, initialState);
 
   // Get Contacts
-  const getContacts = async () => {
+  const getSecrets = async () => {
     try {
-      const res = await axios.get('/api/contacts');
+      const res = await axios.get('/api/secrets');
       dispatch({
-        type: GET_CONTACTS,
+        type: GET_SECRETS,
         payload: res.data,
       });
     } catch (error) {
       dispatch({
-        type: CONTACT_ERROR,
+        type: SECRET_ERROR,
         payload: error.response.message,
       });
     }
   };
 
   // Add Contact
-  const addContact = async (contact) => {
+  const addSecret = async (secret) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
     try {
-      const res = await axios.post('/api/contacts', contact, config);
+      const res = await axios.post('/api/secrets', secret, config);
       dispatch({
-        type: ADD_CONTACT,
+        type: ADD_SECRET,
         payload: res.data,
       });
     } catch (error) {
       dispatch({
-        type: CONTACT_ERROR,
+        type: SECRET_ERROR,
         payload: error.response.message,
       });
     }
   };
 
   // Delete Contact
-  const deleteContact = async (id) => {
+  const deleteSecret = async (id) => {
     try {
-      await axios.delete(`/api/contacts/${id}`);
+      await axios.delete(`/api/secrets/${id}`);
 
       dispatch({
-        type: DELETE_CONTACT,
+        type: DELETE_SECRET,
         payload: id,
       });
     } catch (error) {
       dispatch({
-        type: CONTACT_ERROR,
+        type: SECRET_ERROR,
         payload: error.response.message,
       });
     }
   };
 
   // Update Contact
-  const updateContact = async (contact) => {
+  const updateSecret = async (secret) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
     try {
-      const res = await axios.put(
-        `/api/contacts/${contact._id}`,
-        contact,
-        config
-      );
+      const res = await axios.put(`/api/secrets/${secret._id}`, secret, config);
       dispatch({
-        type: UPDATE_CONTACT,
+        type: UPDATE_SECRET,
         payload: res.data,
       });
     } catch (error) {
       dispatch({
-        type: CONTACT_ERROR,
+        type: SECRET_ERROR,
         payload: error.response.message,
       });
     }
   };
 
   // Clear Contacts
-  const clearContacts = () => {
-    dispatch({ type: CLEAR_CONTACTS });
+  const clearSecrets = () => {
+    dispatch({ type: CLEAR_SECRETS });
   };
 
   // Set Current Contact
-  const setCurrent = (contact) => {
-    console.log(contact.views);
-    if (contact.views === 1) {
-      contact.views = contact.views - 2;
+  const setCurrent = (secret) => {
+    console.log(secret.views);
+    if (secret.views === 1) {
+      secret.views = secret.views - 2;
     } else {
-      contact.views--;
+      secret.views--;
     }
 
-    dispatch({ type: SET_CURRENT, payload: contact });
+    dispatch({ type: SET_CURRENT, payload: secret });
   };
 
   // Clear Current Contact
@@ -129,7 +125,7 @@ const ContactState = (props) => {
 
   // Filter Contacts
   const filterContacts = (text) => {
-    dispatch({ type: FILTER_CONTACTS, payload: text });
+    dispatch({ type: FILTER_SECRETS, payload: text });
   };
 
   // Clear Filter
@@ -138,26 +134,26 @@ const ContactState = (props) => {
   };
 
   return (
-    <ContactContext.Provider
+    <SecretContext.Provider
       value={{
-        contacts: state.contacts,
+        secrets: state.secrets,
         current: state.current,
         filtered: state.filtered,
         error: state.error,
-        getContacts,
-        addContact,
-        deleteContact,
-        clearContacts,
+        getSecrets,
+        addSecret,
+        deleteSecret,
+        clearSecrets,
         setCurrent,
         clearCurrent,
-        updateContact,
+        updateSecret,
         filterContacts,
         clearFilter,
       }}
     >
       {props.children}
-    </ContactContext.Provider>
+    </SecretContext.Provider>
   );
 };
 
-export default ContactState;
+export default SecretState;

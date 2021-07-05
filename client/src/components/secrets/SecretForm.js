@@ -1,15 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react';
-import ContactContext from '../../context/contact/contactContext';
+import SecretContext from '../../context/secret/secretContext';
 
 import bcrypt from 'bcryptjs';
 
-const ContactForm = () => {
-  const contactContext = useContext(ContactContext);
+const SecretForm = () => {
+  const secretContext = useContext(SecretContext);
 
-  const { addContact, current, clearCurrent, updateContact } = contactContext;
+  const { addSecret, current, clearCurrent, updateSecret } = secretContext;
 
-  const [contact, setContact] = useState({
-    secret: '',
+  const [secret, setSecret] = useState({
+    secretText: '',
     hash: '',
     views: '',
     expire: '',
@@ -19,21 +19,21 @@ const ContactForm = () => {
     if (current !== null) {
       console.log(current.views);
 
-      setContact(current);
+      setSecret(current);
     } else {
-      setContact({
-        secret: '',
+      setSecret({
+        secretText: '',
         views: '',
         expire: '',
         hash: '',
       });
     }
-  }, [contactContext, current]);
+  }, [secretContext, current]);
 
-  const { secret, views, expire } = contact;
+  const { secretText, views, expire } = secret;
 
   const onChange = (event) => {
-    setContact({ ...contact, [event.target.name]: event.target.value });
+    setSecret({ ...secret, [event.target.name]: event.target.value });
   };
 
   const clearData = () => {
@@ -43,13 +43,13 @@ const ContactForm = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     if (current) {
-      updateContact(contact);
+      updateSecret(secret);
     } else {
       const salt = await bcrypt.genSalt(5);
-      const hashed = await bcrypt.hash(secret, salt);
-      contact.hash = hashed;
-      console.log(contact);
-      addContact(contact);
+      const hashed = await bcrypt.hash(secretText, salt);
+      secret.hash = hashed;
+      console.log(secret);
+      addSecret(secret);
     }
     clearData();
   };
@@ -63,8 +63,8 @@ const ContactForm = () => {
         <input
           type='text'
           placeholder='Secret'
-          name='secret'
-          value={secret}
+          name='secretText'
+          value={secretText}
           onChange={onChange}
         />
         {current ? (
@@ -102,4 +102,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default SecretForm;

@@ -7,8 +7,7 @@ import About from './components/pages/About';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alerts from './components/layout/Alerts';
-import ContactState from './context/contact/ContactState';
-import ContactScreen from './components/contacts/ContactScreen';
+import SecretState from './context/secret/SecretState';
 import AuthState from './context/auth/AuthState';
 import AlertState from './context/alert/AlertState';
 import setAuthToken from './utils/setAuthToken';
@@ -21,7 +20,7 @@ if (localStorage.token) {
 const App = () => {
   return (
     <AuthState>
-      <ContactState>
+      <SecretState>
         <AlertState>
           <Router>
             <Fragment>
@@ -33,13 +32,12 @@ const App = () => {
                   <Route exact path='/about' component={About} />
                   <Route exact path='/register' component={Register} />
                   <Route exact path='/login' component={Login} />
-                  <Route exact path='/:hash' component={ContactScreen} />
                 </Switch>
               </div>
             </Fragment>
           </Router>
         </AlertState>
-      </ContactState>
+      </SecretState>
     </AuthState>
   );
 };

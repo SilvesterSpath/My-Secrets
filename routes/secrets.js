@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
-const Contact = require('../models/Contact');
+const Secret = require('../models/Secret');
 
 // @route   GET api/contacts
 // @desc    Get user all contacts
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
-    const contacts = await Contact.find({ user: req.user.id }).sort({
+    const secrets = await Secret.find({ user: req.user.id }).sort({
       date: -1,
     });
-    res.json(contacts);
+    res.json(secrets);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');
@@ -24,8 +24,8 @@ router.get('/', auth, async (req, res) => {
 // @access  Private
 router.get('/:id', auth, async (req, res) => {
   try {
-    const contact = await Contact.findById(req.params.id);
-    res.json(contact);
+    const secret = await Secret.findById(req.params.id);
+    res.json(secret);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');
@@ -37,26 +37,26 @@ router.get('/:id', auth, async (req, res) => {
 // @access  Private
 router.post(
   '/',
-  [auth, [check('secret', 'Name is required').not().isEmpty()]],
+  [auth, [check('secretText', 'Secret is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { secret, views, expire, hash } = req.body;
+    const { secretText, views, expire, hash } = req.body;
 
     try {
-      const newContact = new Contact({
-        secret,
+      const newSecret = new Secret({
+        secretText,
         views,
         expire,
         hash,
         user: req.user.id,
       });
 
-      const contact = await newContact.save(); // this will save the contact instance to the database
+      const secret = await newSecret.save(); // this will save the contact instance to the database
 
-      res.json(contact);
+      res.json(secret);
     } catch (error) {
       console.error(error.message);
       res.status(500).send('Server Error');
@@ -68,33 +68,33 @@ router.post(
 // @desc    Update a contact
 // @access  Private
 router.put('/:id', auth, async (req, res) => {
-  const { secret, views, expire, hash } = req.body;
+  const { secretText, views, expire, hash } = req.body;
 
   // Build a contact object
-  const contactFields = {};
-  if (secret) contactFields.secret = secret;
-  if (views) contactFields.views = views;
-  if (expire) contactFields.expire = expire;
-  if (hash) contactFields.hash = hash;
+  const secretFields = {};
+  if (secretText) secretFields.secretText = secretText;
+  if (views) secretFields.views = views;
+  if (expire) secretFields.expire = expire;
+  if (hash) secretFields.hash = hash;
 
   try {
-    let contact = await Contact.findById(req.params.id);
-    if (!contact) {
+    let secret = await Secret.findById(req.params.id);
+    if (!secret) {
       return res.status(404).json({ message: 'Secret not found' });
     }
     // Make sure user owns contact
-    if (contact.user.toString() !== req.user.id) {
+    if (secret.user.toString() !== req.user.id) {
       return res.status(401).json({ message: 'Not authorized!' });
     }
 
     // Now make the actual update
-    contact = await Contact.findByIdAndUpdate(
+    secret = await Secret.findByIdAndUpdate(
       req.params.id,
-      { $set: contactFields },
+      { $set: secretFields },
       { new: true }
     );
 
-    res.json(contact);
+    res.json(secret);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');
@@ -106,16 +106,16 @@ router.put('/:id', auth, async (req, res) => {
 // @access  Private
 router.delete('/:id', auth, async (req, res) => {
   try {
-    let contact = await Contact.findById(req.params.id);
-    if (!contact) {
+    let secret = await Secret.findById(req.params.id);
+    if (!secret) {
       return res.status(404).json({ message: 'Secret not found' });
     }
     // Make sure user owns contact
-    if (contact.user.toString() !== req.user.id) {
+    if (secret.user.toString() !== req.user.id) {
       return res.status(401).json({ message: 'Not authorized!' });
     }
 
-    await Contact.findByIdAndRemove(req.params.id);
+    await Secret.findByIdAndRemove(req.params.id);
 
     res.json({ message: 'Secret Removed' });
   } catch (error) {

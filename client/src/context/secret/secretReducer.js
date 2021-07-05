@@ -1,61 +1,61 @@
 import {
-  ADD_CONTACT,
-  DELETE_CONTACT,
+  ADD_SECRET,
+  DELETE_SECRET,
   SET_CURRENT,
   CLEAR_CURRENT,
-  UPDATE_CONTACT,
-  FILTER_CONTACTS,
+  UPDATE_SECRET,
+  FILTER_SECRETS,
   CLEAR_FILTER,
-  CONTACT_ERROR,
-  GET_CONTACTS,
-  CLEAR_CONTACTS,
+  SECRET_ERROR,
+  GET_SECRETS,
+  CLEAR_SECRETS,
 } from '../types';
 
-const contactReducer = (state, action) => {
+const secretReducer = (state, action) => {
   switch (action.type) {
-    case GET_CONTACTS:
+    case GET_SECRETS:
       return {
         ...state,
-        contacts: action.payload,
+        secrets: action.payload,
         loading: false,
       };
-    case ADD_CONTACT:
+    case ADD_SECRET:
       return {
         ...state,
-        contacts: [action.payload, ...state.contacts],
+        secrets: [action.payload, ...state.secrets],
         loading: false,
       };
-    case CONTACT_ERROR:
+    case SECRET_ERROR:
       return {
         ...state,
         error: action.payload,
       };
-    case UPDATE_CONTACT:
+    case UPDATE_SECRET:
       return {
         ...state,
-        contacts: state.contacts.map((i) =>
+        secrets: state.secrets.map((i) =>
           i._id === action.payload._id ? action.payload : i
         ),
         loading: false,
       };
-    case DELETE_CONTACT:
+    case DELETE_SECRET:
       return {
         ...state,
-        contacts: state.contacts.filter((i) => i._id !== action.payload),
+        secrets: state.secrets.filter((i) => i._id !== action.payload),
         loading: false,
       };
-    case CLEAR_CONTACTS:
+    case CLEAR_SECRETS:
       return {
         ...state,
-        contacts: null,
+        secrets: null,
         current: null,
         filtered: null,
         error: null,
       };
-    case FILTER_CONTACTS:
+    case FILTER_SECRETS:
       return {
         ...state,
-        filtered: state.contacts.filter((i) => {
+        filtered: state.secrets.filter((i) => {
           const regex = new RegExp(`${action.payload}`, 'gi');
           return i.name.match(regex) || i.email.match(regex);
         }),
@@ -64,7 +64,7 @@ const contactReducer = (state, action) => {
       return {
         ...state,
         current: action.payload,
-        contacts: state.contacts.map((i) =>
+        SECRETs: state.secrets.map((i) =>
           i._id === action.payload._id ? action.payload : i
         ),
       };
@@ -85,4 +85,4 @@ const contactReducer = (state, action) => {
   }
 };
 
-export default contactReducer;
+export default secretReducer;

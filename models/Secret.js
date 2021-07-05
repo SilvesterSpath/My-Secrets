@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const ContactSchema = mongoose.Schema({
+const SecretSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users',
   },
-  secret: {
+  secretText: {
     type: String,
     required: true,
   },
@@ -25,4 +25,4 @@ const ContactSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('contact', ContactSchema);
+module.exports = mongoose.model('secret', SecretSchema);

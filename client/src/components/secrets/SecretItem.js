@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import ContactContext from '../../context/contact/contactContext';
+import SecretContext from '../../context/secret/secretContext';
 
-const ContactItem = ({ contact }) => {
-  const contactContext = useContext(ContactContext);
-  const { deleteContact, setCurrent, clearCurrent } = contactContext;
+const SecretItem = ({ secret }) => {
+  const secretContext = useContext(SecretContext);
+  const { deleteSecret, setCurrent, clearCurrent } = secretContext;
 
-  const { _id, views, expire, hash, date } = contact;
+  const { _id, views, expire, hash, date } = secret;
 
   const onDelete = () => {
-    deleteContact(_id);
+    deleteSecret(_id);
     clearCurrent();
   };
 
@@ -50,12 +50,12 @@ const ContactItem = ({ contact }) => {
       <p>
         {views < 1 || diff <= 0 ? (
           <button className='btn btn-dark btn-sm' disabled>
-            Can't View Secret!
+            Can't View Secret
           </button>
         ) : (
           <button
             className='btn btn-dark btn-sm'
-            onClick={() => setCurrent(contact)}
+            onClick={() => setCurrent(secret)}
           >
             View Secret
           </button>
@@ -69,8 +69,8 @@ const ContactItem = ({ contact }) => {
   );
 };
 
-ContactItem.prototype = {
-  contact: PropTypes.object.isRequired,
+SecretItem.prototype = {
+  secret: PropTypes.object.isRequired,
 };
 
-export default ContactItem;
+export default SecretItem;

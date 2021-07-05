@@ -1,36 +1,36 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import ContactContext from '../../context/contact/contactContext';
-import ContactItem from './ContactItem';
+import SecretContext from '../../context/secret/secretContext';
+import SecretItem from './SecretItem';
 import Spinner from '../layout/Spinner';
 
-const Contacts = () => {
-  const contactContext = useContext(ContactContext);
+const Secrets = () => {
+  const secretContext = useContext(SecretContext);
 
-  const { contacts, filtered, getContacts, loading } = contactContext;
+  const { secrets, filtered, getSecrets, loading } = secretContext;
 
   useEffect(() => {
-    getContacts();
+    getSecrets();
     // eslint-disable-next-line
   }, []);
 
-  if (contacts !== null && contacts.length === 0) {
+  if (secrets !== null && secrets.length === 0) {
     return <h4>Please add a Secret</h4>;
   }
 
   return (
     <Fragment>
-      {contacts !== null && !loading ? (
+      {secrets !== null && !loading ? (
         <TransitionGroup>
           {filtered
             ? filtered.map((i) => (
                 <CSSTransition key={i._id} timeout={300} classNames='item'>
-                  <ContactItem contact={i} />
+                  <SecretItem secret={i} />
                 </CSSTransition>
               ))
-            : contacts.map((i) => (
+            : secrets.map((i) => (
                 <CSSTransition key={i._id} timeout={300} classNames='item'>
-                  <ContactItem contact={i} />
+                  <SecretItem secret={i} />
                 </CSSTransition>
               ))}
         </TransitionGroup>
@@ -41,4 +41,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default Secrets;
