@@ -45,7 +45,7 @@ const SecretItem = ({ secret }) => {
             <br /> {' ' + expireDate}
           </li>
         )}
-        {/* {hash && <li>hash: {' ' + hash.slice(0, 25)}</li>} */}
+        {hash && <li>hash: {' ' + hash.slice(0, 25)}</li>}
       </ul>
       <p>
         {views < 1 || diff <= 0 ? (
