@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ContactContext from '../../context/contact/contactContext';
+
 import bcrypt from 'bcryptjs';
 
 const ContactForm = () => {
@@ -66,20 +67,28 @@ const ContactForm = () => {
           value={secret}
           onChange={onChange}
         />
-        <input
-          type='number'
-          placeholder='RemainingViews'
-          name='views'
-          value={views}
-          onChange={onChange}
-        />
-        <input
-          type='number'
-          placeholder='ExpiresAfterMinutes'
-          name='expire'
-          value={expire}
-          onChange={onChange}
-        />
+        {current ? (
+          ''
+        ) : (
+          <input
+            type='number'
+            placeholder='RemainingViews'
+            name='views'
+            value={views}
+            onChange={onChange}
+          />
+        )}
+        {current ? (
+          ''
+        ) : (
+          <input
+            type='number'
+            placeholder='ExpiresAfterMinutes'
+            name='expire'
+            value={expire}
+            onChange={onChange}
+          />
+        )}
 
         <div>
           <input

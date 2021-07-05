@@ -15,7 +15,6 @@ import {
   CLEAR_FILTER,
   CONTACT_ERROR,
 } from '../types';
-import contactContext from './contactContext';
 
 const ContactState = (props) => {
   const initialState = {

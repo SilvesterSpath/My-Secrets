@@ -38,7 +38,7 @@ const ContactItem = ({ contact }) => {
             {' ' + expire} minutes left
           </li>
         )}
-        {hash && <li>hash: {' ' + hash.slice(0, 10)}</li>}
+        {hash && <li>hash: {' ' + hash.slice(0, 25)}</li>}
       </ul>
       <p>
         {views < 1 ? (
@@ -60,6 +60,9 @@ const ContactItem = ({ contact }) => {
 
         <button className='btn btn-danger btn-sm' onClick={onDelete}>
           Delete
+        </button>
+        <button className='btn btn-light btn-sm'>
+          <a href={`/${hash}`}>View Secret</a>
         </button>
       </p>
     </div>
