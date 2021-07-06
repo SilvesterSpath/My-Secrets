@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SecretContext from '../../context/secret/secretContext';
 
@@ -18,6 +18,18 @@ const SecretItem = ({ secret }) => {
   const currentDate = new Date();
 
   const diff = expireDate - currentDate;
+  console.log(diff);
+
+  function setDisabled() {
+    const sign = document.getElementById('view');
+    sign.disabled = true;
+    sign.innerHTML = "Can't view secret";
+  }
+
+  useEffect(() => {
+    setTimeout(setDisabled, diff);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className='card bg-light'>
@@ -49,12 +61,13 @@ const SecretItem = ({ secret }) => {
       </ul>
       <p>
         {views < 1 || diff <= 0 ? (
-          <button className='btn btn-dark btn-sm' disabled>
-            Can't View Secret
+          <button className='btn btn-dark btn-sm' disabled id='view'>
+            Can't view secret
           </button>
         ) : (
           <button
             className='btn btn-dark btn-sm'
+            id='view'
             onClick={() => setCurrent(secret)}
           >
             View Secret

@@ -5,8 +5,6 @@ const path = require('path');
 
 const app = express();
 
-app.get('/', (req, res) => res.json({ message: 'Hello' }));
-
 // Connect Database
 connectDB();
 
@@ -14,10 +12,6 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 app.use(morgan('dev'));
-
-/* app.get('/', (req, res) => {
-  res.json({ msg: 'Welcome to the SecretKeeper API...' });
-}); */
 
 // Define Routes
 app.use('/api/users', require('./routes/users'));

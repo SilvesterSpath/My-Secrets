@@ -48,7 +48,6 @@ const SecretForm = () => {
       const salt = await bcrypt.genSalt(5);
       const hashed = await bcrypt.hash(secretText, salt);
       secret.hash = hashed;
-      console.log(secret);
       addSecret(secret);
     }
     clearData();
