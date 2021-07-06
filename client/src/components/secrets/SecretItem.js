@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import SecretContext from '../../context/secret/secretContext';
 
@@ -18,18 +18,6 @@ const SecretItem = ({ secret }) => {
   const currentDate = new Date();
 
   const diff = expireDate - currentDate;
-  console.log(diff);
-
-  function setDisabled() {
-    const sign = document.getElementById('view');
-    sign.disabled = true;
-    sign.innerHTML = "Can't view secret";
-  }
-
-  useEffect(() => {
-    setTimeout(setDisabled, diff);
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <div className='card bg-light'>
